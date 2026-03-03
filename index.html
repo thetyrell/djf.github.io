@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>Digital Justice Foundation</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+  <meta name="theme-color" content="#1a365d" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Helvetica+Neue:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Variables ── */
+    :root {
+      --primary: #5a9fd4;
+      --accent: #7bb8e8;
+      --secondary: #1a2a3a;
+      --foreground: #e2eaf2;
+      --muted-fg: #8ba3b8;
+      --border: #2a3a4a;
+      --card: #141e2a;
+      --bg: #0a1018;
+      --hero-img: url("hero.jpg");
+      --work-img: url("courtroom.jpg");
+      --about-img: url("about.jpg");
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Share Tech Mono', 'Courier New', monospace; background: var(--bg); color: var(--foreground); line-height: 1.5; }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; padding: 0; margin: 0; }
+    button { font-family: inherit; cursor: pointer; }
+
+    /* ── Container ── */
+    .container { width: 100%; margin-left: auto; margin-right: auto; padding-left: 1rem; padding-right: 1rem; }
+    @media (min-width: 640px) { .container { padding-left: 1.5rem; padding-right: 1.5rem; } }
+    @media (min-width: 1024px) { .container { padding-left: 2rem; padding-right: 2rem; max-width: 1280px; } }
+
+    /* ── NAV ── */
+    #navbar {
+      position: fixed; width: 100%; top: 0; z-index: 50;
+      background-color: #0d1720;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 8px rgba(0,0,0,0.5);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 4rem; }
+    .nav-logo img { height: 2rem; width: auto; }
+    .nav-links { display: none; align-items: center; gap: 2rem; }
+    .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--foreground); transition: color 0.15s; }
+    .nav-links a:hover {text-decoration: underline; background-color: #16263d;}
+    @media (min-width: 768px) { 
+.nav-links { display: flex; } 
+.nav-mobile-btn { display: none !important; } }
+    .nav-mobile-btn { background: none; border: none; padding: 0.5rem; color: var(--foreground); display: flex; align-items: center; justify-content: center; }
+    .nav-mobile-btn:hover { background: var(--secondary); }
+    .nav-mobile-menu { display: none; background: #0d1720; border-bottom: 1px solid var(--border); }
+    .nav-mobile-menu.open { display: block; }
+    .nav-mobile-menu .container { padding-top: 1rem; padding-bottom: 1rem; display: flex; flex-direction: column; gap: 1rem; }
+    .nav-mobile-menu a { font-weight: 500; color: var(--foreground); }
+    .nav-mobile-menu a:hover { color: var(--accent); text-decoration: underline; }
+
+    /* ── HERO ── */
+    #home {
+      position: relative; width: 100%; min-height: 80vh; padding-top: 4rem;
+      display: flex; align-items: center; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: var(--hero-img);
+      background-size: cover; background-position: center; background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+    .hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.28); }
+    .hero-content { position: relative; z-index: 10; padding-top: 5rem; padding-bottom: 5rem; width: 100%; }
+    .hero-content-inner { max-width: 56rem; margin-left: auto; margin-right: auto; display: flex; flex-direction: column; align-items: flex-end; gap: 1.5rem; }
+    .hero-tagline { text-align: right; line-height: 2.1; }
+    .hero-tagline span {
+      display: inline;
+      background: rgba(0,0,0,0.72);
+      color: #fff;
+      font-family: 'Share Tech Mono', 'Courier New', monospace;
+      font-size: clamp(0.8rem, 1.7vw, 1.1rem);
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      padding: 0.2em 0.7em;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+    .hero-djf {
+      background: rgba(0,0,0,0.72);
+      color: #fff;
+      font-family: 'Share Tech Mono', 'Courier New', monospace;
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      padding: 0.4rem 1.6rem;
+      line-height: 1.1;
+      text-align: center;
+    }
+    .hero-btns { display: flex; flex-direction: column; gap: 1rem; align-self: flex-end; }
+    @media (min-width: 640px) { .hero-btns { flex-direction: row; } }
+    .btn-accent {
+      display: inline-block; padding: 0.75rem 2rem;
+      background: rgba(0,0,0,0.72);
+      color: white; font-family: 'Share Tech Mono', 'Courier New', monospace;
+      font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase;
+      transition: background 0.15s; text-align: center;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+    .btn-accent:hover { background: rgba(0,0,0,0.9); }
+    .btn-ghost {
+      display: inline-block; padding: 0.75rem 2rem;
+      background: rgba(255,255,255,0.15);
+      color: white; font-family: 'Share Tech Mono', 'Courier New', monospace;
+      font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.4); transition: background 0.15s; text-align: center;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.25); }
+    .scroll-indicator { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 10; animation: bounce 1s infinite; }
+    .scroll-indicator svg { width: 1.5rem; height: 1.5rem; color: white; stroke: white; fill: none; }
+    @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-8px); } }
+
+    /* ── ABOUT ── */
+    #about { padding: 5rem 0; background-color: #0e1822; }
+    .about-grid { display: grid; gap: 3rem; align-items: center; }
+    @media (min-width: 768px) { .about-grid { grid-template-columns: 1fr 1fr; } }
+    .about-img-wrap { position: relative; }
+    .about-img-wrap img { width: 100%; aspect-ratio: 1; object-fit: cover; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+    .about-deco-br { position: absolute; bottom: -1rem; right: -1rem; width: 6rem; height: 6rem; background: rgba(90,159,212,0.25); }
+    .about-deco-tl { position: absolute; top: -1rem; left: -1rem; width: 8rem; height: 8rem; background: rgba(26,42,58,0.6); }
+    .about-label { font-size: 0.875rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; }
+    .about-text h2 { font-size: 2.25rem; font-weight: 700; color: var(--foreground); margin-top: 0.5rem; margin-bottom: 1.5rem; }
+    .about-text p { font-size: 1.125rem; color: rgba(226,234,242,0.8); margin-bottom: 1.5rem; line-height: 1.7; }
+    .focus-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 480px) { .focus-grid { grid-template-columns: 1fr; } }
+    .focus-card { padding: 1rem; background: rgba(90,159,212,0.08); border: 1px solid rgba(90,159,212,0.2); }
+    .focus-card h4 { font-weight: 600; color: var(--accent); margin-bottom: 0.5rem; font-size: 0.95rem; }
+    .focus-card p { font-size: 0.875rem; color: rgba(226,234,242,0.7); }
+
+    /* ── OUR WORK ── */
+    #work { position: relative; padding: 5rem 0; overflow: hidden; }
+    .work-bg-img {
+      position: absolute; inset: 0;
+      background-image: var(--work-img);
+      background-size: cover; background-position: center; opacity: 5;
+    }
+    .work-bg-gradient { position: absolute; inset: 0; background: linear-gradient(to bottom, #080e16, #060c12); }
+    .work-content { position: relative; z-index: 10; }
+    .work-header { max-width: 42rem; margin-bottom: 4rem; }
+    .work-label { font-size: 0.875rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; }
+    .work-header h2 { font-size: 2.25rem; font-weight: 700; color: white; margin-top: 0.5rem; margin-bottom: 1rem; }
+    .work-header p { font-size: 1.125rem; color: rgba(255,255,255,0.7); }
+    .cases-grid { display: grid; gap: 1.5rem; }
+    @media (min-width: 768px) { .cases-grid { grid-template-columns: 1fr 1fr; } }
+    .case-card { background: rgba(90,159,212,0.07); backdrop-filter: blur(4px); border: 1px solid rgba(90,159,212,0.2); padding: 1.5rem; transition: background 0.15s; }
+    .case-card:hover { background: rgba(90,159,212,0.14); }
+    .case-card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1rem; }
+    .case-card-top-left { flex: 1; }
+    .case-card h3 { font-size: 1.125rem; font-weight: 600; color: white; margin-bottom: 0.25rem; line-height: 1.4; transition: color 0.15s; }
+    .case-card:hover h3 { color: var(--accent); }
+    .case-card .citation { font-size: 0.875rem; color: rgba(255,255,255,0.7); font-weight: 500; }
+    .case-circuit { font-size: 0.75rem; background: rgba(90,159,212,0.15); color: var(--accent); padding: 0.25rem 0.75rem; border-radius: 9999px; white-space: nowrap; margin-left: 1rem; flex-shrink: 0; border: 1px solid rgba(90,159,212,0.3); }
+    .case-card p { font-size: 0.875rem; color: rgba(255,255,255,0.7); line-height: 1.6; }
+    .work-cta { margin-top: 3rem; text-align: center; }
+    .work-cta p { color: rgba(255,255,255,0.7); margin-bottom: 1rem; }
+    .btn-accent-solid { display: inline-block; padding: 0.75rem 2rem; background: var(--accent); color: #0a1018; font-weight: 600; transition: background 0.15s; }
+    .btn-accent-solid:hover { background: #a0ccf0; }
+
+    /* ── MISSION STATEMENT ── */
+    .mission-statement {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      padding: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .mission-statement h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+    }
+    .mission-statement p {
+      font-size: 0.9375rem;
+      color: rgba(226,234,242,0.8);
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+    .mission-statement p:last-child { margin-bottom: 0; }
+
+    /* ── TEAM ── */
+    #team { padding: 5rem 0; background: #0e1822; }
+    .team-header { max-width: 42rem; margin-bottom: 4rem; }
+    .team-label { font-size: 0.875rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; }
+    .team-header h2 { font-size: 2.25rem; font-weight: 700; color: var(--foreground); margin-top: 0.5rem; margin-bottom: 1rem; }
+    .team-header p { font-size: 1.125rem; color: rgba(226,234,242,0.8); }
+    .team-grid { display: grid; gap: 2rem; }
+    @media (min-width: 768px) { .team-grid { grid-template-columns: repeat(3, 1fr); } }
+    .team-card { background: var(--card); border: 1px solid var(--border); overflow: hidden; transition: box-shadow 0.15s; }
+    .team-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .team-card-header { background: linear-gradient(to right, #0f2a45, #1a3a5c); padding: 1.5rem; color: white; border-bottom: 1px solid rgba(90,159,212,0.3); }
+    .team-card-header h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .team-card-header p { color: var(--accent); font-weight: 500; }
+    .team-card-body { padding: 1.5rem; }
+    .team-card-body .bio { color: rgba(226,234,242,0.8); margin-bottom: 1.5rem; line-height: 1.6; }
+    .team-section-label { font-weight: 600; color: var(--accent); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    .team-card-body ul { font-size: 0.875rem; color: rgba(226,234,242,0.65); margin-bottom: 1.5rem; }
+    .team-card-body ul li { margin-bottom: 0.25rem; }
+    .team-card-body ul li:last-child { margin-bottom: 0; }
+
+    /* ── CONTACT ── */
+    #contact { padding: 5rem 0; background: #080e16; }
+    .contact-inner { max-width: 56rem; margin: 0 auto; }
+    .contact-header { text-align: center; margin-bottom: 4rem; }
+    .contact-label { font-size: 0.875rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; }
+    .contact-header h2 { font-size: 2.25rem; font-weight: 700; color: var(--foreground); margin-top: 0.5rem; margin-bottom: 1rem; }
+    .contact-header p { font-size: 1.125rem; color: rgba(226,234,242,0.8); }
+    .contact-cards { display: grid; gap: 2rem; margin-bottom: 3rem; }
+    @media (min-width: 768px) { .contact-cards { grid-template-columns: repeat(3, 1fr); } }
+    .contact-card { background: var(--card); padding: 1.5rem; border: 1px solid var(--border); text-align: center; transition: border-color 0.15s, box-shadow 0.15s; }
+    .contact-card:hover { border-color: var(--accent); box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+    .contact-card-icon { display: flex; justify-content: center; margin-bottom: 1rem; }
+    .contact-card-icon-inner { width: 3rem; height: 3rem; background: rgba(90,159,212,0.1); display: flex; align-items: center; justify-content: center; transition: background 0.15s; border: 1px solid rgba(90,159,212,0.2); }
+    .contact-card:hover .contact-card-icon-inner { background: var(--accent); border-color: var(--accent); }
+    .contact-card-icon-inner svg { width: 1.5rem; height: 1.5rem; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.15s; }
+    .contact-card:hover .contact-card-icon-inner svg { stroke: #0a1018; }
+    .contact-card h3 { font-weight: 600; color: var(--foreground); margin-bottom: 0.5rem; }
+    .contact-card p { font-size: 0.875rem; color: var(--muted-fg); word-break: break-word; }
+    .contact-form-wrap { background: var(--card); border: 1px solid var(--border); padding: 2rem; }
+    .form-row { display: grid; gap: 1.5rem; }
+    @media (min-width: 768px) { .form-row { grid-template-columns: 1fr 1fr; } }
+    .form-group { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .form-group:last-child { margin-bottom: 0; }
+    .form-group label { font-size: 0.875rem; font-weight: 600; color: var(--accent); }
+    .form-group input, .form-group textarea {
+      width: 100%; padding: 0.5rem 1rem; border: 1px solid var(--border);
+      font-family: inherit; font-size: 1rem; color: var(--foreground); background: #0a1018;
+      outline: none; transition: box-shadow 0.15s, border-color 0.15s;
+    }
+    .form-group input:focus, .form-group textarea:focus { box-shadow: 0 0 0 2px rgba(90,159,212,0.4); border-color: var(--accent); }
+    .form-group textarea { resize: none; }
+    .form-footer { display: flex; align-items: center; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem; }
+    .form-success { color: var(--accent); font-weight: 500; }
+    .btn-primary-solid { padding: 0.75rem 2rem; background: var(--accent); color: #0a1018; font-weight: 600; border: none; font-size: 1rem; transition: background 0.15s; cursor: pointer; }
+    .btn-primary-solid:hover { background: #a0ccf0; }
+    .btn-primary-solid:disabled { opacity: 0.5; cursor: default; }
+
+    /* ── FOOTER ── */
+    footer { background: #040810; color: white; border-top: 1px solid var(--border); }
+    .footer-main { padding: 4rem 0; }
+    .footer-grid { display: grid; gap: 3rem; margin-bottom: 3rem; }
+    @media (min-width: 768px) { .footer-grid { grid-template-columns: repeat(3, 1fr); } }
+    .footer-brand-logo { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
+    .footer-dj { width: 2rem; height: 2rem; background: var(--accent); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; }
+    .footer-dj span { color: #0a1018; font-weight: 700; font-size: 0.875rem; }
+    .footer-brand-logo .brand-name { font-weight: 700; font-size: 1.125rem; }
+    .footer-brand p { font-size: 0.875rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
+    .footer-col h4 { font-weight: 600; color: var(--accent); text-transform: uppercase; font-size: 0.875rem; letter-spacing: 0.05em; margin-bottom: 1rem; }
+    .footer-col ul li { margin-bottom: 0.5rem; }
+    .footer-col ul li a { font-size: 0.875rem; color: rgba(255,255,255,0.5); transition: color 0.15s; }
+    .footer-col ul li a:hover { color: white; }
+    .footer-contact-link { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.875rem; color: rgba(255,255,255,0.5); margin-bottom: 0.75rem; transition: color 0.15s; }
+    .footer-contact-link:hover { color: white; }
+    .footer-contact-link svg { width: 1rem; height: 1rem; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; margin-top: 2px; }
+    .footer-divider { border-top: 1px solid rgba(255,255,255,0.07); padding-top: 2rem; }
+    .footer-bottom { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+    @media (min-width: 768px) { .footer-bottom { flex-direction: row; justify-content: space-between; } }
+    .footer-bottom p { font-size: 0.875rem; color: rgba(255,255,255,0.4); }
+    .social-links { display: flex; align-items: center; gap: 1rem; }
+    .social-link { width: 2.5rem; height: 2.5rem; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.5); transition: background 0.15s, color 0.15s; border: 1px solid rgba(255,255,255,0.1); }
+    .social-link:hover { background: var(--accent); color: #0a1018; border-color: var(--accent); }
+    .social-link svg { width: 1.125rem; height: 1.125rem; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="container nav-inner">
+    <div class="nav-logo">
+      <img src="logo.png" alt="Digital Justice Foundation" />
+    </div>
+    <div class="nav-links">
+      <a href="#home">HOME</a>
+      <a href="#about">ABOUT</a>
+      <a href="#work">WORK</a>
+      <a href="#team">TEAM</a>
+      <a href="#contact">CONTACT</a>
+    </div>
+    <button class="nav-mobile-btn" id="menuBtn" aria-label="Toggle menu">
+      <svg id="iconMenu" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg id="iconClose" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="nav-mobile-menu" id="mobileMenu">
+    <div class="container">
+      <a href="#home" onclick="closeMenu()">Home</a>
+      <a href="#about" onclick="closeMenu()">About</a>
+      <a href="#work" onclick="closeMenu()">Our Work</a>
+      <a href="#team" onclick="closeMenu()">Team</a>
+      <a href="#contact" onclick="closeMenu()">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="container hero-content">
+    <div class="hero-content-inner">
+      <div class="hero-tagline">
+        <span>The <strong>Digital Justice Foundation </strong> advocates for, educates about, and defends individual rights in the digital age</span>
+      </div>
+      <div class="hero-djf">DJF</div>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-ghost">Contact Us</a>
+        <a href="#work" class="btn-ghost">View Our Work</a>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap">
+        <img src="about.jpg" alt="Technology and Law" />
+        <div class="about-deco-br"></div>
+        <div class="about-deco-tl"></div>
+      </div>
+      <div class="about-text">
+        <span class="about-label">About Us</span>
+        <h2>Advancing Digital Justice</h2>
+        <p>The Digital Justice Foundation champions, advocates for, and educates about individual rights in digital spaces. We provide legal services that advance the cause of digital justice, ensuring that traditional notions of justice and civil liberties continue to thrive in the digital age.</p>
+        <p>In an age of rapid technological development, entrenched interests often drown out individual voices. We are committed to ensuring that technology and traditional rights develop hand-in-hand.</p>
+        <div class="focus-grid">
+          <div class="focus-card"><h4>Copyright &amp; Fair Use</h4><p>Protecting the rights of individual creators in the digital age</p></div>
+          <div class="focus-card"><h4>Civil Liberties</h4><p>Advocating for privacy rights and individual freedoms online</p></div>
+          <div class="focus-card"><h4>Technology Law</h4><p>Addressing regulation of AI, data privacy, and cybersecurity</p></div>
+          <div class="focus-card"><h4>Access to Justice</h4><p>Expanding legal resources through innovative technology solutions</p></div>
+
+
+        </div>
+      </div>
+    </div><BR>
+     <div class="mission-statement">
+      <h3>Mission Statement</h3>
+      <p>The Digital Justice Foundation ("DJF") advocates for individual rights in digital spaces and aims to ensure that traditional notions of justice and civil liberties continue to thrive in the digital age. In carrying out this mission, the DJF places a particular focus on being a voice for underrepresented individuals and interests.</p>
+      <p>The DJF's work in copyright law serves as an important cornerstone of this mission. Indeed, the DJF sees individual copyright protections as an integral part of a stable digital economy and well-functioning political system, advancing important humanistic values such as privacy, consent, and digital dignity.</p>
+      <p>While certain organizations feel that digital technologies have undermined the importance of copyright's protections, the DJF firmly believes that these technologies have made copyright more important than ever. For example, an often-overlooked consequence of the internet is that, for the first time in history, most citizens are now regular creators and publishers of content. The emergence of a content-creating public gives copyright's protections a newfound importance to a vastly wider class of citizens than in previous times.</p>
+      <p>Public debates on copyright should reflect this development. Yet the public's interest in copyright often goes unrepresented in the inter-industry disputes that shape the development of copyright law. To correct this absence, the Digital Justice Foundation is a committed advocate before courts and policymakers for the rights of individual creators and for the often-underappreciated public interest in their rights.</p>
+      <p>Beyond the copyright context, the DJF promotes and protects civil liberties, privacy rights and employee rights as they are affected by new technologies. For these reasons, the DJF and its attorneys have been at the forefront of emergent legal issues surrounding algorithmic discrimination and governmental adoption of new technologies to administer traditional government functions. The DJF is also exploring novel ways to harness the power of technology to expand access to law.</p>
+      <p>In an age of rapid technological development, entrenched interests often drown out individual voices and overshadow the development of individual rights. The DJF is committed to ensuring that technology and traditional rights develop hand-in-hand.</p>
+    </div></div>
+
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="container">
+    <div class="team-header">
+      <span class="team-label">DJF Leadership</span>
+      <h2>Meet Our Team</h2>
+      <p>
+The Digital Justice Foundation's legal team exhaustively researches issues from all angles to ensure that we provide unparalleled insight into the law. Our attorneys are licensed in California, New York, Washington, and the District of Columbia, as well as most Federal Courts of Appeal.</p>
+    </div>
+ 
+
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-card-header"><h3>Gregory Keenan</h3><p>Co-Founder &amp; Attorney</p></div>
+        <div class="team-card-body">
+          <p class="bio">Digital Ethics Fellow at the Jain Family Institute. Specializes in copyright law and digital rights.</p>
+          <p class="team-section-label">Education</p>
+          <ul><li>• J.D., Stanford Law School</li><li>• B.A., Claremont McKenna College</li></ul>
+          <p class="team-section-label">Bar Admissions</p>
+          <ul><li>• State of New York</li><li>• U.S. Courts of Appeals (1st, 2nd, 7th, 8th, 9th, 10th Circuits)</li></ul>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-header"><h3>Andrew Grimm</h3><p>Co-Founder &amp; Attorney</p></div>
+        <div class="team-card-body">
+          <p class="bio">Extensive experience in appellate litigation and constitutional law. Leading advocate for civil liberties.</p>
+          <p class="team-section-label">Education</p>
+          <ul><li>• J.D., Stanford Law School</li><li>• B.A., Claremont McKenna College</li></ul>
+          <p class="team-section-label">Bar Admissions</p>
+          <ul><li>• State of Washington</li><li>• U.S. Supreme Court</li><li>• U.S. Courts of Appeals (2nd, 3rd, 4th, 5th, 6th, 9th, 10th Circuits, D.C.)</li></ul>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-header"><h3>James David Banker</h3><p>Co-Founder &amp; Attorney</p></div>
+        <div class="team-card-body">
+          <p class="bio">Focuses on technology law and algorithmic discrimination. Published scholar in digital rights.</p>
+          <p class="team-section-label">Education</p>
+          <ul><li>• J.D., Stanford Law School</li><li>• MPhil., University of Cambridge</li><li>• B.A., San Diego State University</li></ul>
+          <p class="team-section-label">Bar Admissions</p>
+          <ul><li>• State of California</li><li>• District of Columbia</li><li>• U.S. Court of Appeals for the Ninth Circuit</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUR WORK -->
+<section id="work">
+  <div class="work-bg-img"></div>
+  <div class="work-bg-gradient"></div>
+  <div class="container work-content">
+    <div class="work-header">
+      <span class="work-label">Our Impact</span>
+      <h2>Legal Cases</h2>
+      <p>The Digital Justice Foundation’s lawyers are committed to tackling hard legal questions at the intersection of technology and law. We are honored to note that we have represented many clients, who could not otherwise obtain appellate counsel, in appeals raising novel and important legal questions. The Foundation’s appellate representation has helped establish new law in binding, precedential decisions at the appellate level across the nation.</p>
+    </div>
+    <div class="cases-grid">
+      <div class="case-card">
+        <div class="case-card-top">
+          <div class="case-card-top-left">
+            <h3>Bell v. Wilmott Storage Services, LLC</h3>
+            <p class="citation">12 F.4th 1065 (9th Cir. 2021)</p>
+          </div>
+          <span class="case-circuit">9th Circuit</span>
+        </div>
+        <p>Held that copyright plaintiffs do not need to prove who viewed an online infringement and that there is no standalone de-minimis defense to infringement.</p>
+      </div>
+      <div class="case-card">
+        <div class="case-card-top">
+          <div class="case-card-top-left">
+            <h3>Designworks Homes, Inc. v. Columbia House of Brokers Realty, Inc.</h3>
+            <p class="citation">9 F.4th 803 (8th Cir. 2021)</p>
+          </div>
+          <span class="case-circuit">8th Circuit</span>
+        </div>
+        <p>Held that realtors cannot put floor plans of copyrighted homes online without authorization.</p>
+      </div>
+      <div class="case-card">
+        <div class="case-card-top">
+          <div class="case-card-top-left">
+            <h3>Grimm v. City of Portland</h3>
+            <p class="citation">971 F.3d 1060 (9th Cir. 2020)</p>
+          </div>
+          <span class="case-circuit">9th Circuit</span>
+        </div>
+        <p>Held that pre-towing notice is presumptively required and established the proper test for sufficient method of notice.</p>
+      </div>
+      <div class="case-card">
+        <div class="case-card-top">
+          <div class="case-card-top-left">
+            <h3>Mozilla Corp. v. FCC</h3>
+            <p class="citation">940 F.3d 1 (D.C. Cir. 2019)</p>
+          </div>
+          <span class="case-circuit">D.C. Circuit</span>
+        </div>
+        <p>Held that intervenors can raise new arguments in admin cases and that FCC rehearing is not needed to challenge arbitrary and capricious rationales.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="contact-header">
+        <span class="contact-label">Get In Touch</span>
+        <h2>Contact Us</h2>
+        <p>Have a question about our services or want to discuss a potential case? We'd love to hear from you.</p>
+      </div>
+      <div class="contact-cards">
+        <a href="tel:+15166332633" class="contact-card">
+          <div class="contact-card-icon"><div class="contact-card-icon-inner"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 5.21 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div></div>
+          <h3>Phone</h3>
+          <p>+1 (516) 633-2633</p>
+        </a>
+        <a href="/cdn-cgi/l/email-protection#1f767179705f7b7678766b7e73756a6c6b767c7a79706a717b7e6b76707131706d78" class="contact-card">
+          <div class="contact-card-icon"><div class="contact-card-icon-inner"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div></div>
+          <h3>Email</h3>
+          <p><span class="__cf_email__" data-cfemail="147d7a727b54707d737d6075787e6167607d7771727b617a7075607d7b7a3a7b6673">info@digitaljusticefoundation.org</span></p>
+        </a>
+        <a href="https://maps.google.com/?q=15287+Pepperwood+Dr+Omaha+NE+68154" target="_blank" rel="noopener noreferrer" class="contact-card">
+          <div class="contact-card-icon"><div class="contact-card-icon-inner"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div></div>
+          <h3>Address</h3>
+          <p>15287 Pepperwood Dr, Omaha, NE 68154</p>
+        </a>
+      </div>
+      <div class="contact-form-wrap">
+        <form id="contactForm">
+          <div class="form-row">
+            <div class="form-group"><label for="fname">Name</label><input type="text" id="fname" name="name" placeholder="Your name" required /></div>
+            <div class="form-group"><label for="femail">Email</label><input type="email" id="femail" name="email" placeholder="your@email.com" required /></div>
+          </div>
+          <div class="form-group"><label for="fsubject">Subject</label><input type="text" id="fsubject" name="subject" placeholder="How can we help?" required /></div>
+          <div class="form-group"><label for="fmessage">Message</label><textarea id="fmessage" name="message" rows="5" placeholder="Tell us more about your inquiry..." required></textarea></div>
+          <div class="form-footer">
+            <p class="form-success" id="formSuccess" style="display:none">✓ Thank you! We'll be in touch soon.</p>
+            <button type="submit" class="btn-primary-solid" id="submitBtn">Send Message</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container footer-main">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#work">Our Work</a></li>
+          <li><a href="#team">Team</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#contact">Legal Services</a></li>
+          <li><a href="#contact">Advocacy</a></li>
+          <li><a href="#contact">Consultation</a></li>
+          <li><a href="#contact">Education</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:+15166332633" class="footer-contact-link"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 5.21 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>+1 (516) 633-2633</span></a>
+        <a href="/cdn-cgi/l/email-protection#c1a8afa7ae81a5a8a6a8b5a0adabb4b2b5a8a2a4a7aeb4afa5a0b5a8aeafefaeb3a6" class="footer-contact-link"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span><span class="__cf_email__" data-cfemail="c1a8afa7ae81a5a8a6a8b5a0adabb4b2b5a8a2a4a7aeb4afa5a0b5a8aeafefaeb3a6">info@digitaljusticefoundation.org</span></span></a>
+        <a href="https://maps.google.com/?q=15287+Pepperwood+Dr+Omaha+NE+68154" target="_blank" rel="noopener noreferrer" class="footer-contact-link"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>15287 Pepperwood Dr<br>Omaha, NE 68154</span></a>
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Digital Justice Foundation, Inc. All rights reserved.</p>
+      <div class="social-links">
+        <a href="https://twitter.com/digitaljusticef" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Twitter">
+          <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+        </a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Mobile menu
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const iconMenu = document.getElementById('iconMenu');
+  const iconClose = document.getElementById('iconClose');
+  menuBtn.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    iconMenu.style.display = open ? 'none' : '';
+    iconClose.style.display = open ? '' : 'none';
+  });
+  function closeMenu() {
+    mobileMenu.classList.remove('open');
+    iconMenu.style.display = '';
+    iconClose.style.display = 'none';
+  }
+
+  // Contact form
+  const form = document.getElementById('con
